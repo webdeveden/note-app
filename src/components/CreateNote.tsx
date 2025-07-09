@@ -19,7 +19,7 @@ const CreateNote = ({ onClick }: Props) => {
         onClick={onClick}
         cursor="pointer"
       >
-        <HStack alignContent="center">
+        <HStack>
           <FaPlus />
           <Text>Create note</Text>
         </HStack>
