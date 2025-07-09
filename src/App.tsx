@@ -160,7 +160,7 @@ function App() {
 
   return (
     <>
-      <Box padding={5}>
+      <Box padding={{ base: 1, lg: 5 }}>
         <Grid
           templateAreas={{
             base: `"nav" "main"`,
