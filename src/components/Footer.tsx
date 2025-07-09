@@ -1,6 +1,7 @@
-import { Box, Text, Link, HStack } from "@chakra-ui/react";
+import { Box, Text, Link, HStack, useBreakpointValue } from "@chakra-ui/react";
 
 const Footer = () => {
+  const isMobile = useBreakpointValue({ base: true, lg: false });
   return (
     <Box
       as="footer"
@@ -9,7 +10,7 @@ const Footer = () => {
       color="white"
       py={4}
       px={0}
-      position="sticky"
+      position={!isMobile ? "sticky" : "relative"}
       bottom={0}
       boxShadow="0 -2px 5px rgba(0, 0, 0, 0.2)"
       textAlign="center"
