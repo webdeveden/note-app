@@ -9,7 +9,7 @@ const Footer = () => {
       color="white"
       py={4}
       px={0}
-      // position="sticky"
+      position="sticky"
       bottom={0}
       boxShadow="0 -2px 5px rgba(0, 0, 0, 0.2)"
       textAlign="center"
