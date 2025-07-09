@@ -1,0 +1,15 @@
+/* body {
+  padding: 1rem;
+} */
+
+/* html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+} */
+
+.searchbox {
+  width: 50%;
+}

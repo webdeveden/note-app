@@ -1,0 +1,146 @@
+// import {
+//   Card,
+//   CardBody,
+//   Heading,
+//   VStack,
+//   Text,
+//   Divider,
+//   CardFooter,
+//   HStack,
+//   Button,
+// } from "@chakra-ui/react";
+
+// import type { CardProps } from "./NoteCard";
+
+// interface ShowNoteProps {
+//   note: CardProps;
+//   onClose: () => void;
+// }
+
+// const ShowNote = ({ note, onClose }: ShowNoteProps) => {
+//   return (
+//     <Card
+//       borderRadius="lg"
+//       w="full"
+//       //   h="100%"
+//       display="flex"
+//       flexDirection="column"
+//       //   justifyContent="space-between"
+//       p={2}
+//       marginTop={10}
+//     >
+//       <VStack align="stretch" spacing={3}>
+//         <Heading size="md">{note.title}</Heading>
+//         <Text>{note.category}</Text>
+//         <CardBody p={0} flex="1">
+//           <Text>{note.text}</Text>
+//         </CardBody>
+//         <Divider />
+//       </VStack>
+//       <CardFooter pt={2} pb={0}>
+//         <HStack justifyContent="space-between" w="100%" align="center">
+//           <Text fontSize="sm" color="gray.500">
+//             Owner: {note.owner || "N/A"}
+//           </Text>
+//         </HStack>
+//       </CardFooter>
+//       <Button mt={4} onClick={onClose}>
+//         Close
+//       </Button>
+//     </Card>
+//   );
+// };
+
+// export default ShowNote;
+import {
+  Card,
+  CardBody,
+  Heading,
+  VStack,
+  Text,
+  Divider,
+  CardFooter,
+  Button,
+  useBreakpointValue,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  //   ModalCloseButton,
+  ModalBody,
+} from "@chakra-ui/react";
+
+import type { CardProps } from "./NoteCard";
+
+interface ShowNoteProps {
+  note: CardProps;
+  onClose: () => void;
+  isOpen?: boolean; // Only used on mobile
+}
+
+const ShowNote = ({ note, onClose, isOpen }: ShowNoteProps) => {
+  const isMobile = useBreakpointValue({ base: true, lg: false });
+
+  if (isMobile) {
+    return (
+      <Modal isOpen={!!isOpen} onClose={onClose} size="med">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            {note.title[0].toUpperCase() + note.title.slice(1)}
+          </ModalHeader>
+          {/* <ModalCloseButton /> */}
+          <ModalBody>
+            <VStack align="stretch" spacing={4}>
+              <Text fontWeight="bold">Category: {note.category}</Text>
+              <Text whiteSpace="pre-wrap">{note.text}</Text>
+              <Divider />
+              <Text fontSize="sm" color="gray.500">
+                By: {note.owner || "N/A"}
+              </Text>
+              <Button mt={4} onClick={onClose}>
+                Close
+              </Button>
+            </VStack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    );
+  }
+
+  // Desktop (aside panel)
+  return (
+    <Card
+      borderRadius="20px"
+      w="full"
+      p={4}
+      alignContent="center"
+      mr={0}
+      maxH="100%"
+      overflowY="auto"
+    >
+      <VStack align="stretch" spacing={4}>
+        <Heading size="md">
+          {note.title[0].toUpperCase() + note.title.slice(1)}
+        </Heading>
+        <Text fontWeight="medium" color="gray.600">
+          Category: {note.category}
+        </Text>
+        <CardBody p={0}>
+          <Text whiteSpace="pre-wrap">{note.text}</Text>
+        </CardBody>
+        <Divider />
+        <CardFooter p={0} pt={2} justifyContent="space-between">
+          <Text fontSize="sm" color="gray.500">
+            By: {note.owner || "N/A"}
+          </Text>
+          <Button onClick={onClose} size="sm">
+            Close
+          </Button>
+        </CardFooter>
+      </VStack>
+    </Card>
+  );
+};
+
+export default ShowNote;
