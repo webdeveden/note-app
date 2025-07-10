@@ -13,7 +13,7 @@ const CreateNote = ({ onClick }: Props) => {
         borderColor="gray.300"
         padding="0.5rem"
         width="100%"
-        maxW="400px" // optional: control the max width on large screens
+        // maxW="400px" // optional: control the max width on large screens
         textAlign="center"
         cursor="pointer"
         onClick={onClick}
