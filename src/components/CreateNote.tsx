@@ -14,6 +14,7 @@ const CreateNote = ({ onClick }: Props) => {
         width="50px"
         justifyContent="center"
         justifyItems="center"
+        alignItems="center"
         padding="0.5rem"
         w="100%"
         onClick={onClick}
