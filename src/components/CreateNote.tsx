@@ -7,20 +7,18 @@ interface Props {
 
 const CreateNote = ({ onClick }: Props) => {
   return (
-    <Box justifyItems="left" paddingLeft={0} marginTop={5}>
+    <Box mt={5} display="flex" justifyContent="center">
       <Box
-        border="2px dashed "
+        border="2px dashed"
         borderColor="gray.300"
-        width="50px"
-        justifyContent="center"
-        justifyItems="center"
-        alignItems="center"
         padding="0.5rem"
-        w="100%"
-        onClick={onClick}
+        width="100%"
+        maxW="400px" // optional: control the max width on large screens
+        textAlign="center"
         cursor="pointer"
+        onClick={onClick}
       >
-        <HStack>
+        <HStack justify="center">
           <FaPlus />
           <Text>Create note</Text>
         </HStack>
