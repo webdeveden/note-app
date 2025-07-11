@@ -53,6 +53,11 @@ function App() {
   };
 
   const handleDelete = (id: number) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete? This operation can't be undone!"
+    );
+
+    if (!confirmed) return;
     const updated = allNotes.filter((n) => n.id !== id);
     setAllNotes(updated);
     setNotes(updated);
