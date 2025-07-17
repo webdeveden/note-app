@@ -18,10 +18,16 @@ import CategoryList from "./components/CategoryList";
 import NoteCard, { type CardProps } from "./components/NoteCard";
 import NoteContent from "./components/NoteContent";
 import ShowNote from "./components/ShowNote";
-import { loadNotesFromStorage, saveNotesToStorage } from "./utils/storage";
+import {
+  loadDeletedNotesFromStorage,
+  loadNotesFromStorage,
+  saveDeletedNotesToStorage,
+  saveNotesToStorage,
+} from "./utils/storage";
 import CreateNote from "./components/CreateNote";
 import SortCategory from "./components/SortCategory";
 import Footer from "./components/Footer";
+import Recycle from "./components/Recycle";
 
 function App() {
   const [notes, setNotes] = useState<CardProps[]>([]);
@@ -37,12 +43,14 @@ function App() {
   const mainContentRef = useRef<HTMLDivElement>(null);
   const [currentCategory, setCurrentCategory] = useState<string | null>(null); // for highlight & scroll
   const [filterCategory, setFilterCategory] = useState<string | null>(null); // for filtering notes
+  const [showRecycle, setShowRecycle] = useState(false);
+  const [deletedNotes, setDeletedNotes] = useState<CardProps[]>([]);
 
   const handleSave = (note: CardProps) => {
     if (selectedNote) {
       const updated = allNotes.map((n) => (n.id === note.id ? note : n));
-      setAllNotes(updated);
-      setNotes(updated);
+      setAllNotes(updated); // become allnotes
+      setNotes(updated); // become notes
       setSelectedNote(null);
     } else {
       const updated = [...allNotes, note];
@@ -53,12 +61,17 @@ function App() {
   };
 
   const handleDelete = (id: number) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete? This operation can't be undone!"
-    );
-
+    const confirmed = window.confirm(`Are you sure you want to delete?`);
     if (!confirmed) return;
+
     const updated = allNotes.filter((n) => n.id !== id);
+    const deletedNote = allNotes.find((n) => n.id === id);
+
+    if (deletedNote) {
+      deletedNote.deletedAt = Date.now(); // Save delete timestamp
+      setDeletedNotes((prev) => [...prev, deletedNote]);
+    }
+
     setAllNotes(updated);
     setNotes(updated);
   };
@@ -134,7 +147,19 @@ function App() {
     setNotes(filtered);
   };
 
-  // grouping categories and it's note content
+  const handleToggleRecycle = () => {
+    setShowRecycle((prev) => !prev);
+  };
+
+  const handleUndoDeleted = (id: number) => {
+    const note = deletedNotes.find((t) => t.id === id);
+    if (!note) return;
+    setNotes((prev) => [...prev, note]);
+    setAllNotes((prev) => [...prev, note]);
+    setDeletedNotes((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  // grouping categories and it's note content using reduce
 
   const grouped = notes.reduce<Record<string, CardProps[]>>((acc, note) => {
     acc[note.category] = acc[note.category] || [];
@@ -142,6 +167,7 @@ function App() {
     return acc;
   }, {});
 
+  // sorting grouped notes in alphabetical
   const sortedGrouped = Object.entries(grouped).sort((a, b) =>
     a[0].localeCompare(b[0])
   );
@@ -154,14 +180,25 @@ function App() {
     const stored = loadNotesFromStorage();
     setAllNotes(stored);
     setNotes(stored);
+
+    const deleted = loadDeletedNotesFromStorage();
+
+    const tenDaysAgo = Date.now() - 10 * 24 * 60 * 60 * 1000; // 10 days in milliseconds
+
+    const filteredDeleted = deleted.filter(
+      (note) => !note.deletedAt || note.deletedAt > tenDaysAgo
+    );
+
+    setDeletedNotes(filteredDeleted);
     setIsLoaded(true);
   }, []);
 
   useEffect(() => {
     if (isLoaded) {
       saveNotesToStorage(allNotes);
+      saveDeletedNotesToStorage(deletedNotes);
     }
-  }, [allNotes, isLoaded]);
+  }, [allNotes, deletedNotes, isLoaded]);
 
   return (
     <>
@@ -197,6 +234,11 @@ function App() {
                 ].sort()}
                 selectedCategory={currentCategory}
                 onSelectCategory={handleScrollTo}
+              />
+              <Recycle
+                notes={showRecycle ? deletedNotes : []}
+                onSelect={handleToggleRecycle}
+                onUndo={handleUndoDeleted}
               />
             </GridItem>
             {/* <GridItem area="divider" bg="gray.200" width="1px" /> */}

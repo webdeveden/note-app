@@ -22,6 +22,7 @@ export interface CardProps {
   text: string;
   category: string;
   owner: string;
+  deletedAt?: number;
 }
 
 interface NoteCardProps {
