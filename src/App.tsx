@@ -184,7 +184,7 @@ function App() {
 
     const deleted = loadDeletedNotesFromStorage();
 
-    const tenDaysAgo = Date.now() - 5 * 60 * 1000;
+    const tenDaysAgo = Date.now() - 10 * 60 * 60 * 1000;
 
     const filteredDeleted = deleted.filter(
       (note) => !note.deletedAt || note.deletedAt > tenDaysAgo
