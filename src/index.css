@@ -13,3 +13,8 @@ body,
 .searchbox {
   width: 50%;
 }
+
+.deleted-note-title {
+  font-weight: bold;
+  color: rgb(174, 171, 171);
+}

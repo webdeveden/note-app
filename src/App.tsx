@@ -28,6 +28,7 @@ import CreateNote from "./components/CreateNote";
 import SortCategory from "./components/SortCategory";
 import Footer from "./components/Footer";
 import Recycle from "./components/Recycle";
+import ShowMenu from "./components/ShowMenu";
 
 function App() {
   const [notes, setNotes] = useState<CardProps[]>([]);
@@ -183,7 +184,7 @@ function App() {
 
     const deleted = loadDeletedNotesFromStorage();
 
-    const tenDaysAgo = Date.now() - 10 * 24 * 60 * 60 * 1000; // 10 days in milliseconds
+    const tenDaysAgo = Date.now() - 5 * 60 * 1000;
 
     const filteredDeleted = deleted.filter(
       (note) => !note.deletedAt || note.deletedAt > tenDaysAgo
@@ -220,8 +221,26 @@ function App() {
           gap={4}
         >
           <GridItem area="nav">
-            <NavBar onSearch={handleSearch} />
+            <NavBar onSearch={handleSearch} onMenuClick={onOpen} />
+            <ShowMenu
+              categories={[
+                "All",
+                "illustrations",
+                "spiritual gems",
+                "others",
+                "watchtower",
+              ].sort()}
+              selectedCategory={currentCategory}
+              isOpen={isOpen}
+              onClose={onClose}
+              onSelectCategory={handleScrollTo}
+              onUndo={handleUndoDeleted}
+              onSelect={handleToggleRecycle}
+              deletedNotes={deletedNotes}
+              showRecycle={showRecycle}
+            />
           </GridItem>
+
           <Show above="lg">
             <GridItem area="asideLeft">
               <CategoryList

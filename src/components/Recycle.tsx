@@ -27,12 +27,12 @@ const Recycle = ({ notes, onSelect, onUndo }: RecycleProps) => {
         onClick={onSelect}
         justifyContent="flex-start"
         padding={1}
-        marginY={5}
+        // marginY={5}
       >
         Recycle Bin
       </Button>
 
-      <List paddingLeft={0}>
+      <List paddingLeft={5} spacing={0} marginY={2}>
         {notes.map((note) => (
           <>
             <ListItem
@@ -40,22 +40,24 @@ const Recycle = ({ notes, onSelect, onUndo }: RecycleProps) => {
               display="flex"
               justifyContent="space-between"
             >
-              <HStack justifyContent="space-between" w="100%">
+              <HStack justifyContent="space-between" w="100%" fontSize={"sm"}>
                 <div>
                   <ListIcon
                     as={FaRegTimesCircle}
                     color="red.400"
                     whiteSpace="pre-wrap"
                   />
-                  {note.title.length <= 10
-                    ? note.title
-                    : note.title.substring(0, 10) + "..."}
+                  <span className="deleted-note-title">
+                    {note.title.length <= 10
+                      ? note.title
+                      : note.title.substring(0, 10) + "..."}
+                  </span>
                 </div>
                 <Tooltip label="restore" hasArrow placement="right">
                   <span>
                     <GrUndo
                       color="orange"
-                      size="25px"
+                      size="20px"
                       onClick={() => onUndo(note.id)}
                       style={{ cursor: "pointer" }}
                     />
