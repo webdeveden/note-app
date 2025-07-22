@@ -14,7 +14,7 @@ const NavBar = ({ onSearch, onMenuClick }: Props) => {
 
   if (isMobile) {
     return (
-      <HStack justifyContent="space-between">
+      <HStack justifyContent="space-between" paddingY={5}>
         <FiMenu size="40px" onClick={onMenuClick} cursor="pointer" />
         {/* <Image src={logo} boxSize="60px" /> */}
         <SearchInput onSearch={onSearch} />
