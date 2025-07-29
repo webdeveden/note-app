@@ -4,7 +4,7 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerOverlay,
-  DrawerCloseButton,
+  // DrawerCloseButton,
   //   DrawerHeader,
   useColorModeValue,
   VStack,
@@ -44,7 +44,7 @@ const ShowMenu = ({
     <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
       <DrawerOverlay />
       <DrawerContent bg={useColorModeValue("gray.50", "gray.800")}>
-        <DrawerCloseButton />
+        {/* <DrawerCloseButton /> */}
         {/* <DrawerHeader>Categories</DrawerHeader> */}
         <DrawerBody>
           <VStack align="stretch" spacing={2}>
