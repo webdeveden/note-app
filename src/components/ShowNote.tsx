@@ -29,7 +29,7 @@ const ShowNote = ({ note, onClose, isOpen }: ShowNoteProps) => {
 
   if (isMobile) {
     return (
-      <Modal isOpen={!!isOpen} onClose={onClose} size="med">
+      <Modal isOpen={!!isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
