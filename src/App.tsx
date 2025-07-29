@@ -293,7 +293,10 @@ function App() {
                     {categoryNotes.map((note) => (
                       <Box
                         key={note.id}
-                        onClick={() => handleViewNote(note)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewNote(note);
+                        }}
                         cursor="pointer"
                       >
                         <NoteContent
