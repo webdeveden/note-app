@@ -201,6 +201,14 @@ function App() {
     }
   }, [allNotes, deletedNotes, isLoaded]);
 
+  const categoryNames = [
+    "All",
+    "illustrations",
+    "spiritual gems",
+    "others",
+    "watchtower",
+  ];
+
   return (
     <>
       <Box padding={{ base: 1, lg: 5 }}>
@@ -223,13 +231,7 @@ function App() {
           <GridItem area="nav">
             <NavBar onSearch={handleSearch} onMenuClick={onOpen} />
             <ShowMenu
-              categories={[
-                "All",
-                "illustrations",
-                "spiritual gems",
-                "others",
-                "watchtower",
-              ].sort()}
+              categories={categoryNames.sort()}
               selectedCategory={currentCategory}
               isOpen={isOpen}
               onClose={onClose}
@@ -244,13 +246,7 @@ function App() {
           <Show above="lg">
             <GridItem area="asideLeft">
               <CategoryList
-                categories={[
-                  "All",
-                  "illustrations",
-                  "spiritual gems",
-                  "others",
-                  "watchtower",
-                ].sort()}
+                categories={categoryNames.sort()}
                 selectedCategory={currentCategory}
                 onSelectCategory={handleScrollTo}
               />
