@@ -114,7 +114,7 @@ const NoteCard = ({
 
         <FormControl isInvalid={!!errors.text}>
           <Textarea
-            placeholder="Your ideas..."
+            placeholder="Your note..."
             resize="vertical"
             minH="150px"
             {...register("text")}
