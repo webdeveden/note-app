@@ -29,6 +29,7 @@ import SortCategory from "./components/SortCategory";
 import Footer from "./components/Footer";
 import Recycle from "./components/Recycle";
 import ShowMenu from "./components/ShowMenu";
+import GoogleAnalytics from "./GoogleAnalytics";
 
 function App() {
   const [notes, setNotes] = useState<CardProps[]>([]);
@@ -211,6 +212,7 @@ function App() {
 
   return (
     <>
+      <GoogleAnalytics />
       <Box padding={{ base: 1, lg: 5 }}>
         <Grid
           templateAreas={{
